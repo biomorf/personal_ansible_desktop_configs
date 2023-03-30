@@ -1,3 +1,4 @@
 [user]
 	email = j@jlacroix.me
 	name = Jay LaCroix
+	safe.directory = /home/jay/.tmux/plugins/completion

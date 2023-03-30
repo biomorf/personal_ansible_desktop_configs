@@ -7,5 +7,5 @@
       - exim4
       - exim4-base
       - exim4-config
-      - nano
+        #- nano
   when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]

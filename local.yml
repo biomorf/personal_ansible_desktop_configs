@@ -2,6 +2,7 @@
 - hosts: all
   tags: always
   become: true
+  gather_facts: true
   pre_tasks:
     - name: pre-run | update package cache (arch)
       tags: always
@@ -9,11 +10,11 @@
       changed_when: False
       when: ansible_distribution == "Archlinux"
 
-        #    - name: pre-run | update package cache (debian, etc)
-        #      tags: always
-        #      apt: update_cache=yes
-        #      changed_when: False
-        #      when: ansible_distribution in ["Debian", "Ubuntu"]
+    - name: pre-run | update package cache (debian, etc)
+      tags: always
+      apt: update_cache=yes
+      changed_when: False
+      when: ansible_distribution in ["Debian", "Ubuntu"]
 
 # run roles
 - hosts: all
@@ -22,17 +23,17 @@
   roles:
     - base
 
-- hosts: workstation
-  tags: workstation
-  become: true
-  roles:
-    - workstation
-
-- hosts: server
-  tags: server
-  become: true
-  roles:
-    - server
+      #- hosts: workstation
+      #  tags: workstation
+      #  become: true
+      #  roles:
+      #    - workstation
+      #
+      #- hosts: server
+      #  tags: server
+      #  become: true
+      #  roles:
+      #    - server
 
 # end of run cleanup and reporting
 - hosts: all

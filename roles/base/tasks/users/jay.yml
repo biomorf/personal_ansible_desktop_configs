@@ -117,6 +117,8 @@
       ### error on subsequent runs
 - name: users | jay | clone tmux-completion plugin repository
   tags: dotfiles,jay,users,tmux
+  #become: true
+  become_user: jay
   git:
     repo: https://github.com/srsudar/tmux-completion.git
     dest: /home/jay/.tmux/plugins/completion
@@ -125,6 +127,8 @@
 
 - name: users | jay | clone tmux-continuum plugin repository
   tags: dotfiles,jay,users,tmux
+  #become: true
+  become_user: jay
   git:
     repo: https://github.com/tmux-plugins/tmux-continuum
     dest: /home/jay/.tmux/plugins/continuum
@@ -133,6 +137,8 @@
 
 - name: users | jay | clone tmux-resurrect plugin repository
   tags: dotfiles,jay,users,tmux
+  #become: true
+  become_user: jay
   git:
     repo: https://github.com/tmux-plugins/tmux-resurrect
     dest: /home/jay/.tmux/plugins/resurrect
@@ -208,7 +214,8 @@
       ### error on subsequent runs
 - name: users | jay | checkout git repositories
   tags: git,users,jay
-  become: yes
+  #become: yes
+  become_user: jay
   git:
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"

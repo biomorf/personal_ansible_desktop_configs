@@ -14,9 +14,34 @@
     group: jay
     recurse: true
 
+- name: update_tmux_plugin_perms_ub
+  file:
+    path: /home/ub/.tmux/plugins
+    owner: ub
+    group: ub
+    recurse: true
+
+#- name: mark_continuum_plugin_local_repo_safe
+#  become: true
+#  become_user: jay
+#  command: git config --global --add safe.directory /home/jay/.tmux/plugins/continuum
+
 - name: update_vim_bundle_perms
   file:
     path: /home/jay/.vim/bundle
     owner: jay
     group: jay
     recurse: true
+
+- name: update_vim_bundle_perms_ub
+  file:
+    path: /home/ub/.vim/bundle
+    owner: ub
+    group: ub
+    recurse: true
+
+- name: update_vim_vundle_plugins
+  tags: dotfiles,ub,users,vim
+  become_user: ub
+  command: vim +PluginInstall +qall
+

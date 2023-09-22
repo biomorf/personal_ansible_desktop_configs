@@ -128,13 +128,20 @@
     - { src: 'zsh/zshrc', dest: '.zshrc' }
 
       ### error on subsequent runs
+      # ensure that 'git' and 'acl' packages is installed
 - name: users | ub | clone tmux-completion plugin repository
   tags: dotfiles,ub,users,tmux
+  become: yes
+  become_method: sudo
   become_user: ub
+    #vars:
+    #  allow_world_readable_tmpfiles: true
   git:
     repo: https://github.com/srsudar/tmux-completion.git
     dest: /home/ub/.tmux/plugins/completion
     force: yes
+    clone: yes
+    update: yes
   notify: update_tmux_plugin_perms_ub
 
 - name: users | ub | clone tmux-continuum plugin repository
@@ -144,6 +151,8 @@
     repo: https://github.com/tmux-plugins/tmux-continuum
     dest: /home/ub/.tmux/plugins/continuum
     force: yes
+    clone: yes
+    update: yes
   notify: update_tmux_plugin_perms_ub
 
 - name: users | ub | clone tmux-resurrect plugin repository
@@ -153,6 +162,8 @@
     repo: https://github.com/tmux-plugins/tmux-resurrect
     dest: /home/ub/.tmux/plugins/resurrect
     force: yes
+    clone: yes
+    update: yes
   notify: update_tmux_plugin_perms_ub
 
 
@@ -199,6 +210,8 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     force: yes
+    clone: yes
+    update: yes
     depth: 1
   with_items:
     - { repo: 'https://github.com/romkatv/powerlevel10k.git', dest: '/home/ub/.oh-my-zsh/custom/themes/powerlevel10k' }
@@ -280,6 +293,8 @@
     repo: "{{ item.repo }}"
     dest: "{{ item.dest }}"
     force: yes
+    clone: yes
+    update: yes
   with_items:
     - { repo: 'https://github.com/VundleVim/Vundle.vim.git', dest: '/home/ub/.vim/bundle/Vundle.vim' }
       #installed with Vundle instead...

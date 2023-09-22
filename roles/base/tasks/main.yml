@@ -1,9 +1,11 @@
   ## TODO move it to system pre-setup
+  ## TODO make selection by ip
 - name: system | setup deb proxy !!!
   tags: system,proxy,ub
   ansible.builtin.lineinfile:
-    path: /etc/apt/apt.conf.d/30deb-proxy
-    line: 'Acquire::http::proxy "http://192.168.122.1:8000";'
+    path: /etc/apt/apt.conf.d/01deb-proxy
+    #line: 'Acquire::http::proxy "http://192.168.122.1:8000";'
+    line: 'Acquire::http::proxy "http://10.0.2.2:8000";'
     create: yes
     owner: root
     group: root

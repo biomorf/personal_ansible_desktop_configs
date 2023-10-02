@@ -97,6 +97,7 @@
   - import_tasks: software/vivaldi.yml
   - import_tasks: software/vlc.yml
   - import_tasks: software/xonotic.yml
+  - import_tasks: software/misc_development_packages.yml
 
   rescue:
     - set_fact: task_failed=true

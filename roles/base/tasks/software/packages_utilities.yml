@@ -7,6 +7,8 @@
       - colordiff
       - curl
       - "{{ dns_utils_package}}"
+      - fdupes
+      - jdupes
       - htop
       - iotop
       - "{{ lm_sensors_package }}"
@@ -20,6 +22,7 @@
       - nmap
       - ranger
       - "{{ rename_package }}"
+      - rclone
       - rsync
       - screen
       - sshfs

@@ -1,0 +1,53 @@
+# https://wiki.winehq.org/Ubuntu
+
+### If your system is 64 bit, enable 32 bit architecture (if you haven't already):
+### sudo dpkg --add-architecture i386
+# 32-bit dependencies for Android binaries
+- lineinfile: dest=/var/lib/dpkg/arch line="amd64" create=yes
+- lineinfile: dest=/var/lib/dpkg/arch line="i386" create=yes
+  register: add_i386
+- apt: name={{item}} update_cache={{add_i386.changed}}
+  with_items: ['libc6:i386', 'libstdc++6:i386', 'zlib1g:i386']
+
+
+
+- name: software | WineHQ | add repository key
+  tags: settings,winehq
+  apt_key:
+    url: https://dl.winehq.org/wine-builds/winehq.key
+  when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+
+    #- name: software | WineHQ | add repository
+    #  apt_repository:
+    #    repo: "deb [arch=amd64] https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources stable main"
+    #    filename: winehq
+    #  register: winehq_repo
+    #  #when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+    #  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+- name: software | WineHQ | selectrepo
+  tags: settings,winehq
+  copy:
+    src: https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
+    dest: /etc/apt/sources.list.d/
+    owner: root
+    group: root
+    mode: 0444
+  register: winehq_repo
+  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+
+
+- name: software | WineHQ | update sources (repo added or changed)
+  tags: settings,winehq
+  apt:
+    update_cache: yes
+  changed_when: False
+  when: winehq_repo.changed
+
+- name: software | WineHQ | install package
+  tags: settings,winehq
+  apt:
+    name: winehq-devel
+    #name: winehq-stable
+    install_recommends: true
+  #when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
+  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")

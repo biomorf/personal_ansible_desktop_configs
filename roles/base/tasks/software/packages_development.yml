@@ -4,7 +4,7 @@
     name:
       - fabric
       - flake8
-        #      - git
+      - git
       - perl
       - "{{ python_flake8_package }}"
       - "{{ python_package }}"
@@ -17,7 +17,7 @@
       - tig
     state: latest
 
-- name: system setup | development packages | install packages
+- name: system setup | development packages | install git
   tags: dev,development,packages,python,ruby,git,users,zsh,vim,tmux
   package:
     name:

@@ -45,3 +45,18 @@
   become_user: ub
   command: vim +PluginInstall +qall
 
+
+    #- name: adding existing user '{{ user }}' to group sudo
+    #  user:
+    #    name: '{{ user }}'
+    #    groups: sudo
+    #    append: yes
+
+- name: add_user_ub_to_kvm_group
+  tags: dev,virtualization,packages,qemu
+  user:
+    become: yes
+    name: ub
+    groups: kvm
+    append: yes
+

@@ -11,9 +11,22 @@
       - containerd
       - runc
       - docker-compose
+      - vim-syntax-docker
     state: latest
-  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+  notify:
+    - add_user_ub_to_docker_group
+    #when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
 
+
+- name: system setup | virtualization packages | install podman
+  tags: dev,virtualization,packages,podman
+  package:
+    name:
+      - podman
+      - skopeo
+      - crun
+      #- podman-docker
+    state: latest
 
 #- name: test
 #  tags: test
@@ -35,27 +48,12 @@
       - libvirt-daemon-system
       - libvirt-daemon
       - libvirt-clients
+      - samba
     state: latest
   notify:
     - add_user_ub_to_kvm_group
-  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
-
-
-- name: system setup | virtualization packages | install virtualbox
-  tags: dev,virtualization,packages,virtualbox
-  package:
-    name:
-      - virtualbox
-      - virtualbox-ext-pack
-     #- linux-headers-$(uname -r)
-      - virtualbox-dkms
-      - virtualbox-guest-additions-iso
-      - virtualbox-guest-utils-hwe
-      - virtualbox-guest-x11-hwe
-    state: latest
-  #notify:
-  #  - add_user_ub_to_kvm_group
   #when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+
 
 - name: system setup | virtualization packages | install vagrant
   tags: dev,virtualization,packages,vagrant
@@ -64,6 +62,24 @@
       - vagrant
       - vagrant-libvirt
       - vagrant-sshfs
+    state: latest
+  notify:
+    - add_user_ub_to_kvm_group
+  #when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+ 
+
+    ### distributive repo version
+- name: system setup | virtualization packages | install virtualbox
+  tags: dev,virtualization,packages,virtualbox
+  package:
+    name:
+      - virtualbox
+        #- virtualbox-ext-pack #TODO ERROR: "User did not accept the license."
+        #- linux-headers-$(uname -r) #TODO replace bash parameter expansion
+      - virtualbox-dkms
+      - virtualbox-guest-additions-iso
+      - virtualbox-guest-utils-hwe
+      - virtualbox-guest-x11-hwe
     state: latest
   #notify:
   #  - add_user_ub_to_kvm_group

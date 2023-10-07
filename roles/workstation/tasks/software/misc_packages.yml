@@ -12,7 +12,7 @@
       - dconf-editor
       - dialog
       - easytag
-      - exfat-utils
+      #- exfat-utils
       - "{{ font_fira_mono_package }}"
       - "{{ font_hack_ttf_package }}"
       - "{{ font_inconsolata_package }}"
@@ -42,6 +42,8 @@
       - "{{ wireless_tools_package }}"
       - "{{ wpa_supplicant_package }}"
       - x2goclient
+      - doublecmd-gtk
+      - unison-gtk
 
 - name: software | install system packages specific to debian and ubuntu
   tags: packages,system,system-packages,workstation-packages

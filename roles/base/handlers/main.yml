@@ -55,8 +55,14 @@
 - name: add_user_ub_to_kvm_group
   tags: dev,virtualization,packages,qemu
   user:
-    become: yes
     name: ub
     groups: kvm
+    append: yes
+
+- name: add_user_ub_to_docker_group
+  tags: dev,virtualization,packages,docker
+  user:
+    name: ub
+    groups: docker
     append: yes
 

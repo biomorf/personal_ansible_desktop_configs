@@ -1,9 +1,11 @@
 - name: users | root | ensure account is locked
+  tags: root
   user:
     name: root
     password_lock: yes
 
 - name: users | root | create config directories
+  tags: root,dotfiles
   file:
     path: /root/{{ item.dir }}
     state: directory
@@ -13,9 +15,9 @@
   with_items:
       - { dir: '.vim' }
       - { dir: '.vim/colors' }
-  tags: dotfiles
 
 - name: users | root | copy dotfiles
+  tags: root,dotfiles
   copy:
     src: users/root/{{ item.src }}
     dest: /root/{{ item.dest}}
@@ -26,8 +28,7 @@
       - { src: 'bash/bashrc', dest: '.bashrc' }
       - { src: 'bash/bash_profile', dest: '.bash_profile' }
       - { src: 'bash/profile', dest: '.profile' }
-      - { src: 'tmux/tmux.conf', dest: '.tmux.conf' }
+      - { src: 'zsh/zshrc', dest: '.zshrc' }
       - { src: 'vim/vimrc', dest: '.vimrc' }
       - { src: 'vim/xoria256.vim', dest: '.vim/colors/xoria256.vim' }
-      - { src: 'zsh/zshrc', dest: '.zshrc' }
-  tags: dotfiles
+      - { src: 'tmux/tmux.conf', dest: '.tmux.conf' }

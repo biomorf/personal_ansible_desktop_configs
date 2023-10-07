@@ -18,9 +18,11 @@
       - ncdu
       - neofetch
       - net-tools
+      - cifs-utils
       - "{{ nfs_client_package }}"
       - nmap
       - ranger
+      - rclone
       - "{{ rename_package }}"
       - rclone
       - rsync
@@ -28,6 +30,7 @@
       - sshfs
       - tmux
       - traceroute
+      - unison
       - "{{ vim_package }}"
       - wget
       - whois

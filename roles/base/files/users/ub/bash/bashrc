@@ -174,7 +174,7 @@ fi
 # <<<<  Vagrant command completion (end)
 
 # Enable tab completion for tmux
-source /home/jay/.tmux/plugins/completion/tmux
+source /home/$USER/.tmux/plugins/completion/tmux
 
 
 ### PATH ###

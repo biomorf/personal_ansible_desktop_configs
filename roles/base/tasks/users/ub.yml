@@ -1,14 +1,3 @@
-#- name: system | setup deb proxy
-#  tags: system,proxy,ub
-#  #ansible.builtin.lineinfile:
-#  lineinfile:
-#    path: /etc/apt/apt.conf.d/30deb-proxy
-#    line: 'Acquire::http::proxy "http://192.168.122.1:8000";'
-#    create: yes
-#    owner: root
-#    group: root
-#    mode: '0644'
-
 - name: users | ub | create group
   tags: groups,ub,users
   group:
@@ -77,12 +66,12 @@
     - { dir: '.tmux/config' }
     - { dir: '.tmux/plugins' }
     - { dir: '.vim' }
+    - { dir: '.vim/colors' }
     - { dir: '.vim/autoload' }
     - { dir: '.vim/bundle' }
-    - { dir: '.vim/colors' }
     - { dir: '.vim/ftplugin' }
-    - { dir: '.local/share/fonts/meslolgs' }
     - { dir: '.zsh' }
+    - { dir: '.local/share/fonts/meslolgs' }
 
 - name: users | ub | copy tmux config (server version)
   tags: dotfiles,users,ub,tmux,users,vim,zsh
@@ -113,19 +102,19 @@
     group: ub
     mode: 0600
   with_items:
+    - { src: 'bash/bashrc', dest: '.bashrc' }
+    - { src: 'bash/bash_profile', dest: '.bash_profile' }
+    - { src: 'bash/profile', dest: '.profile' }
+    - { src: 'zsh/zshrc', dest: '.zshrc' }
+    - { src: 'vim/vimrc', dest: '.vimrc' }
+    - { src: 'vim/vim/vimrc_highlight_trailing.vim', dest: '.vim/vimrc_highlight_trailing.vim' }
     - { src: 'bash/bash/bash_aliases', dest: '.bash/bash_aliases' }
     - { src: 'bash/bash/bash_prompt', dest: '.bash/bash_prompt' }
     - { src: 'bash/bash/bash_functions', dest: '.bash/bash_functions' }
-    - { src: 'bash/bash_profile', dest: '.bash_profile' }
-    - { src: 'bash/bashrc', dest: '.bashrc' }
-    - { src: 'bash/profile', dest: '.profile' }
-    - { src: 'git/gitconfig', dest: '.gitconfig' }
     - { src: 'htop/htoprc', dest: '.config/htop/htoprc' }
     - { src: 'inputrc', dest: '.inputrc' }
     - { src: 'mc/mc.ini', dest: '.config/mc/ini' }
-    - { src: 'vim/vimrc', dest: '.vimrc' }
-    - { src: 'vim/vim/vimrc_highlight_trailing.vim', dest: '.vim/vimrc_highlight_trailing.vim' }
-    - { src: 'zsh/zshrc', dest: '.zshrc' }
+    - { src: 'git/gitconfig', dest: '.gitconfig' }
 
       ### error on subsequent runs
       # ensure that 'git' and 'acl' packages is installed

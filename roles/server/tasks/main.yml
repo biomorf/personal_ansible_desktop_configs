@@ -6,6 +6,8 @@
   - import_tasks: nrpe.yml
   - import_tasks: ufw.yml
   - import_tasks: qemu-agent.yml
+  #- import_tasks: nfs-server.yml
+  #- import_tasks: samba-server.yml
 
   - include_tasks: unattended_upgrades.yml
     when:

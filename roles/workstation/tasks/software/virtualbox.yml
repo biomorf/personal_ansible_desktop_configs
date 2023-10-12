@@ -34,6 +34,7 @@
 
       
     ### distributive repo version
+
 - name: system setup | virtualization packages | install virtualbox
   tags: dev,virtualization,packages,virtualbox
   package:
@@ -48,5 +49,20 @@
     state: latest
   #notify:
   #  - add_user_ub_to_kvm_group
-  #when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "22")
+
+- name: system setup | virtualization packages | install virtualbox
+  tags: dev,virtualization,packages,virtualbox
+  package:
+    name:
+      - virtualbox
+        #- virtualbox-ext-pack #TODO ERROR: "User did not accept the license."
+        #- linux-headers-$(uname -r) #TODO replace bash parameter expansion
+      - virtualbox-host-dkms
+      #- linux65-virtualbox-host-modules
+      - virtualbox-guest-iso
+    state: latest
+  #notify:
+  #  - add_user_ub_to_kvm_group
+  when: ansible_os_family == "Archlinux"
 

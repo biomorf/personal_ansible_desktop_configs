@@ -2,23 +2,21 @@
   tags: packages,workstation-packages
   package:
     name:
-      - acpid
-      - alsa-utils
-      - arandr
-      - asunder
-      - cifs-utils
       - "{{ cups_package }}"
       - "{{ cryptsetup_package }}"
+      - acpid
+      - alsa-utils
+      - pavucontrol
+      - easytag  # mp3 tag
       - dconf-editor
-      - dialog
-      - easytag
+      - arandr
+      - asunder  # CD reaper
       #- exfat-utils
       - "{{ font_fira_mono_package }}"
       - "{{ font_hack_ttf_package }}"
       - "{{ font_inconsolata_package }}"
       - "{{ font_noto_emoji_package }}"
       - "{{ font_terminus_package }}"
-      - geany
       - gparted
       - "{{ hunspell_package }}"
       - "{{ hyphen_package }}"
@@ -29,21 +27,16 @@
       - "{{ network_manager_package }}"
       - "{{ network_manager_pptp_package }}"
       - "{{ network_manager_vpnc_package }}"
-      - neovim
-      - pavucontrol
-      - shotwell
-      - simplescreenrecorder
-      - smbclient
-      - sshpass
-      - "{{ ssh_askpass_package }}"
-      - terminator
-      - transmission-gtk
-      - unrar
       - "{{ wireless_tools_package }}"
       - "{{ wpa_supplicant_package }}"
-      - x2goclient
-      - doublecmd-gtk
-      - unison-gtk
+      - psensor
+      - shotwell
+      - sshpass
+      - "{{ ssh_askpass_package }}"
+      - terminator  # terminal emulator
+      - transmission-gtk
+      - dialog
+      - "{{ doublecmd_package }}"
 
 - name: software | install system packages specific to debian and ubuntu
   tags: packages,system,system-packages,workstation-packages
@@ -51,6 +44,9 @@
     name:
       - synaptic
       - vim-gtk3
+      - simplescreenrecorder
+      - x2goclient  # alteranive vnc
+      - unison-gtk
   when: ansible_distribution in ["Debian", "Pop!_OS", "Ubuntu"]
 
 - name: software | remove unneeded workstation packages on debian and ubuntu hosts

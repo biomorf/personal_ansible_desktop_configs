@@ -66,3 +66,17 @@
     groups: docker
     append: yes
 
+- name: docker_service_restart
+  tags: dev,virtualization,packages,docker
+  ansible.builtin.service:
+    name: docker
+    enabled: yes
+    state: started
+
+      #- name: docker_service_restart
+      #  tags: dev,virtualization,packages,docker
+      #  #name: software | syncthing | start and enable syncthing
+      #  command: "{{ item }}"
+      #  with_items:
+      #    - systemctl enable docker
+      #    - systemctl restart docker

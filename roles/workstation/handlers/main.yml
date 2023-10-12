@@ -37,3 +37,11 @@
 
 - name: enable_gnome_extensions
   include_tasks: handlers/enable_gnome_extensions.yml
+
+- name: restart_asus_rog_center
+  tags: system,rog
+  service:
+    name: asusd
+    daemon_reload: true
+    state: restarted
+

@@ -10,5 +10,6 @@
 #workstation1.mydomain.com
 #workstation2.mydomain.com
 #workstation3.mydomain.com
-192.168.122.48
+#192.168.122.48
+192.168.122.122
 #127.0.0.1

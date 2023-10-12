@@ -1,0 +1,94 @@
+# https://gitlab.com/asus-linux/asusctl/-/tree/main
+# https://books.stuartherbert.com/putting-ansible-to-work/building-software-from-source.html
+
+- name: system_setup | asusctl | create source directory
+  tags: system,rog
+  file:
+    path: "{{ item.dir }}"
+    state: directory
+    owner: def
+    group: def
+    mode: 0700
+  with_items:
+    - { dir: '/usr/local/src/asusctl' }
+  when: ansible_virtualization_role != "guest" or
+        ansible_system_vendor == "ASUS"
+
+- name: system_setup | asusctl | clone asusctl repository
+  tags: system,rog
+  #become: true # ubuntu 22 ok
+  become_user: def
+  git:
+    repo: https://gitlab.com/asus-linux/asusctl.git
+    dest: /usr/local/src/asusctl
+    version: "origin/main"
+    force: yes
+  when: ansible_virtualization_role != "guest"
+  #notify: update_asusctl_src_perms
+
+- name: system setup | asusctl | install dependencies
+  tags: system,rog
+  package:
+    name:
+      - curl
+      - cmake
+      - libgtk-3-dev
+      - libpango1.0-dev
+      - libgdk-pixbuf-2.0-dev
+      - libglib2.0-dev
+      - libclang-dev
+      - libudev-dev
+      - libayatana-appindicator3-1
+    state: latest
+  #notify:
+  #  - add_user_ub_to_docker_group
+  when: ansible_virtualization_role != "guest"
+  #when: ansible_facts['distribution'] == "Ubuntu"
+
+- name: system setup | asusctl | download rust compiler
+  tags: system,rog
+  ansible.builtin.get_url:
+    url: https://sh.rustup.rs
+    dest: /usr/local/src/
+    owner: def
+  #copy:
+  #  src: https://sh.rustup.rs
+  #  dest: /usr/local/src/asusctl/rustup-init.sh__
+  #  owner: def
+  #  group: def
+  #  mode: 0440
+  when: ansible_virtualization_role != "guest"
+
+- name: system setup | asusctl | install rust dependencies non-interactively
+  tags: system,rog
+  become_user: def
+  ansible.builtin.command:
+    chdir: /usr/local/src
+    cmd: sh rustup-init.sh -y
+  when: ansible_virtualization_role != "guest"
+
+- name: system setup | asusctl | compile asusctl
+  tags: system,rog
+  become_user: def
+  ansible.builtin.shell:
+    chdir: /usr/local/src/asusctl
+    cmd: . "$HOME/.cargo/env" && make
+  when: ansible_virtualization_role != "guest"
+
+- name: system setup | asusctl | install asusctl
+  tags: system,rog
+  become_user: root
+  become: yes
+  ansible.builtin.shell:
+    chdir: /usr/local/src/asusctl
+    cmd: make install
+  notify: restart_asus_rog_center
+  when: ansible_virtualization_role != "guest"
+
+#- name: system setup | asusctl | install rust dependencies interactively
+#  tags: system,rog
+#  ansible.builtin.expect:
+#    chdir: /usr/local/src/asusctl
+#    command: sh rustup-init.sh
+#    responses:
+

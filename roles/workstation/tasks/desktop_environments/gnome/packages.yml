@@ -8,23 +8,29 @@
       - "{{ gdm_package }}"
       - gedit
       - gnome-backgrounds
-      - gnome-books
-      - gnome-boxes
       - gnome-control-center
       - gnome-disk-utility
 #      - gnome-documents
-      - gnome-icon-theme
 #      - gnome-music
 #      - gnome-photos
-      - gnome-power-manager
-      - gnome-remote-desktop
-      - gnome-shell
       - gnome-shell-extensions
+      - gnome-remote-desktop
       - gnome-system-monitor
       - gnome-terminal
       - gnome-todo
       - gnome-tweaks
       - nautilus
+
+- name: gnome | packages | install gnome packages (Debian family)
+  tags: gnome,gnome-packages
+  package:
+    name:
+      - gnome-books
+      - gnome-icon-theme
+      - gnome-boxes
+      - gnome-power-manager
+      - gnome-shell
+  when: ansible_os_family =="Debian"
 
 - name: gnome | packages | install flatpak support in gnome software
   tags: gnome,gnome-packages

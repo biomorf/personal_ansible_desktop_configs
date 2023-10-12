@@ -162,7 +162,7 @@
     path: "{{ item.dir }}"
     state: directory
     owner: root
-    group: staff
+    group: root
     mode: 0755
   with_items:
     - { dir: '/usr/local/share/fonts/meslolgs' }
@@ -183,7 +183,7 @@
     - { src: 'MesloLGS NF Regular.ttf' }
 
 - name: users | ub | update fonts cache
-  tags: dotfiles,users,vim,ub
+  tags: dotfiles,users,vim,fonts,ub
   become_user: ub
   command: fc-cache -f -v -r
 
